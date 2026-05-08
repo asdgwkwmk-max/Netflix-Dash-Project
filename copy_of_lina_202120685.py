@@ -200,5 +200,4 @@ def update_content_graph(selected_type):
                        color_discrete_sequence=['#b20710'])
     return fig
 
-if __name__ == '__main__':
-  app.run(debug=True)
+app.run_server()
