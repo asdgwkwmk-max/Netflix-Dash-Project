@@ -3,29 +3,22 @@ from dash import dcc, html
 import pandas as pd
 import plotly.express as px
 
-# 1. تحميل البيانات (تأكدي أن ملف netflix_titles.csv مرفوع بجانب الكود في GitHub)
-try:
-    df = pd.read_csv('netflix_titles.csv')
-except:
-    # هذا السطر للاحتياط إذا كان اسم الملف مختلف
-    df = pd.DataFrame({'Type': ['Movie', 'TV Show'], 'Count': [1, 1]})
-
-# 2. تجهيز التطبيق
+# إنشاء التطبيق
 app = dash.Dash(__name__)
 server = app.server
 
-# 3. تصميم الواجهة (بسيطة جداً لضمان التشغيل)
+# تحميل البيانات (تأكدي أن الملف netflix_titles.csv موجود معك في GitHub)
+try:
+    df = pd.read_csv('netflix_titles.csv')
+    fig = px.pie(df, names='type', title='Netflix Content Distribution')
+except:
+    fig = px.scatter(title="Error loading data - check file name")
+
+# واجهة التطبيق
 app.layout = html.Div([
-    html.H1("Netflix Content Analysis (Phase 1)"),
-    
-    html.Div([
-        dcc.Graph(
-            id='graph1',
-            figure=px.pie(df, names='type', title='Distribution of Content Types')
-        )
-    ])
+    html.H1("Netflix Project - Phase 1"),
+    dcc.Graph(figure=fig)
 ])
 
-# 4. سطر التشغيل النهائي لـ Streamlit
 if __name__ == '__main__':
     app.run_server(debug=True)
