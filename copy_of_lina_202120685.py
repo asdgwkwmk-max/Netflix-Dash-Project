@@ -199,5 +199,4 @@ def update_content_graph(selected_type):
                        title=f"Distribution of {selected_type}s by Year",
                        color_discrete_sequence=['#b20710'])
     return fig
-
-app.run_server()
+()app.run
