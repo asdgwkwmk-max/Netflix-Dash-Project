@@ -1,24 +1,17 @@
-import dash
-from dash import dcc, html
+import streamlit as st
 import pandas as pd
 import plotly.express as px
 
-# إنشاء التطبيق
-app = dash.Dash(__name__)
-server = app.server
+st.title("Netflix Content Analysis - Phase 1")
 
-# تحميل البيانات (تأكدي أن الملف netflix_titles.csv موجود معك في GitHub)
+# تحميل البيانات
 try:
     df = pd.read_csv('netflix_titles.csv')
-    fig = px.pie(df, names='type', title='Netflix Content Distribution')
+    
+    # رسمة بيانية بسيطة واحترافية
+    fig = px.pie(df, names='type', title='Distribution of Movies vs TV Shows')
+    st.plotly_chart(fig)
+    
+    st.write("Data Summary:", df.head())
 except:
-    fig = px.scatter(title="Error loading data - check file name")
-
-# واجهة التطبيق
-app.layout = html.Div([
-    html.H1("Netflix Project - Phase 1"),
-    dcc.Graph(figure=fig)
-])
-
-if __name__ == '__main__':
-    app.run_server(debug=True)
+    st.error("Please ensure 'netflix_titles.csv' is uploaded to GitHub.")
